@@ -22,6 +22,7 @@ public partial class FishingParser
                 ClientLanguage.German   => German.Value,
                 ClientLanguage.French   => French.Value,
                 ClientLanguage.Japanese => Japanese.Value,
+                ClientLanguage.Korean => Korean.Value,
                 _                       => throw new InvalidEnumArgumentException(),
             };
         }
@@ -59,6 +60,14 @@ public partial class FishingParser
             AreaDiscovered = new Regex(@"釣り手帳に新しい釣り場「(?<FishingSpot>.+)」の情報を記録した！", RegexOptions.Compiled | RegexOptions.NonBacktracking | RegexOptions.ExplicitCapture),
             Mooch          = new Regex(@"は釣り上げた.+を慎重に投げ込み、泳がせ釣りを試みた。",            RegexOptions.Compiled | RegexOptions.NonBacktracking | RegexOptions.ExplicitCapture),
             Undiscovered   = "未知の釣り場",
+        });
+
+        private static readonly Lazy<Regexes> Korean = new(() => new Regexes
+        {
+            Cast = new Regex(".+님이 (?<FishingSpot>.+)에서 낚시를 시작합니다.", RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.NonBacktracking),
+            AreaDiscovered = new Regex("낚시 수첩에 새로운 낚시터 '(?<FishingSpot>.+)'의 정보를 기록했습니다!", RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.NonBacktracking),
+            Mooch = new Regex("조심스럽게 물에 넣고 생미끼 낚시를 시도합니다.", RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.NonBacktracking),
+            Undiscovered = "미지의 낚시터"
         });
         // @formatter:on
     }
